@@ -23,6 +23,23 @@ def nameCol():
 						'Ссылка на Facebook',
 						'Ссылка на Profi.ru'))
 
+def writeCsv(data):
+	with open('Yandex.csv', 'a') as f:
+		writer = csv.writer(f)
+		writer.writerow( (data['name'],
+						  data['description'],
+						  data['number'],
+						  data['service'],
+						  data['price'], 
+						  data['serviceDescription'],
+						  data['city'],
+						  data['address'],
+						  data['url'],
+						  data['linkVk'],
+						  data['linkInst'],
+						  data['linkFacebook'],
+						  data['linkProfi']) )
+
 def getPageData(html):
 	page = json.loads(html)
 	profile = page['workers']
