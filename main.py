@@ -6,6 +6,23 @@ def  getHtml(url):
 	r = requests.get(url)
 	return r.text
 
+def nameCol():
+	with open('Yandex.csv', 'a') as f:
+		writer = csv.writer(f)
+		writer.writerow(('Ф.И.О. или название образовательного учреждения.',
+						'Описание профиля.',
+						'Номер телефона.',
+						'Услуга.',
+						'Цена за час (в рублях).',
+						'Описание услуги.',
+						'Город.',
+						'Адрес.',
+						'Ссылка на профиль.',
+						'Ссылка на Вконтакте',
+						'Cсылка на Instagram',
+						'Ссылка на Facebook',
+						'Ссылка на Profi.ru'))
+
 def getPageData(html):
 	page = json.loads(html)
 	profile = page['workers']
