@@ -13,28 +13,54 @@ def getPageData(html):
 	for key in profile:
 		ip = key
 		params = '{"data":{"params":{"id":"'+ ip + '"}}}'
+
 		try:
 			number = requests.post('https://yandex.ru/uslugi/api/get_worker_phone?ajax=1', params, cookies=cookies)
 			number = number.text.split('{')[2].split('"')[3]
+
 		except IndexError:
 			continue
+
 		card = profile[key]
 		cardInformation = card['personalInfo']
+
 		try:
 			description = cardInformation['description']
+
 		except KeyError:
 			description = ' '
+
 		site = cardInformation['socialLinks']
+
 		try:
 			linkVk = site['vk']
 			linkInst = site['instagram']
 			linkFacebook = site['facebook']
 			linkProfi = site['profi']
+
 		except KeyError:
 			linkVk = ' '
 			linkInst = ' '
 			linkFacebook = ' '
 			linkProfi = ' '
+
+		name = cardInformation['displayName']
+		adr = cardInformation['addressesList']
+
+		try:
+			city = adr[0]['cityName']
+
+		except IndexError:
+			continue
+
+		try:
+			address = adr[0]['address']
+			
+		except IndexError:
+			address = ' '
+
+		urlId = card['seoname']
+		url = 'https://yandex.ru/uslugi/profile/' + urlId + '?occupationId=%2Frepetitory-i-obucenie&specId=%2Frepetitory-i-obucenie%2Fanglijskij-azyk&text='
 
 def main():
 	url = "https://yandex.ru/uslugi/api/1--/category/repetitoryi-i-obuchenie--2255??msp=no&p=0"
