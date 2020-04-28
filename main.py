@@ -1,5 +1,6 @@
 import requests
 import json
+import csv
 
 def  getHtml(url):
 	r = requests.get(url)
@@ -89,7 +90,22 @@ def getPageData(html):
 					price = price + ' '
 					serviceDescription = serviceDescription + ' '
 			i = i + 1
-			
+
+		data = {'name':name,
+				'description':description,
+				'number':number,
+				'service':service,
+				'serviceDescription':serviceDescription,
+				'price':price,
+				'city':city,
+				'address':address,
+				'url':url,
+				'linkVk':linkVk,
+				'linkInst':linkInst,
+				'linkFacebook':linkFacebook,
+				'linkProfi':linkProfi}
+
+
 def main():
 	url = "https://yandex.ru/uslugi/api/1--/category/repetitoryi-i-obuchenie--2255??msp=no&p=0"
 	html = get_html(url)
