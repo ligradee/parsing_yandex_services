@@ -40,6 +40,20 @@ def writeCsv(data):
 						  data['linkFacebook'],
 						  data['linkProfi']) )
 
+def formattedText(str):
+	str = str.split(".")
+	lenStr = len(str)
+	i = 1
+	l = str[0].strip(" ")
+	while(i < lenStr):
+		if(str[i][0] != " "):
+			l = l + str[i]
+			continue
+		l = l + ".\n"
+		l = l + str[i].strip(" ")
+		i = i + 1
+	return l
+
 def getPageData(html):
 	page = json.loads(html)
 	profile = page['workers']
@@ -61,6 +75,7 @@ def getPageData(html):
 
 		try:
 			description = cardInformation['description']
+			description = formattedText(description)
 
 		except KeyError:
 			description = ' '
