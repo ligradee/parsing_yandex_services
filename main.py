@@ -61,7 +61,35 @@ def getPageData(html):
 
 		urlId = card['seoname']
 		url = 'https://yandex.ru/uslugi/profile/' + urlId + '?occupationId=%2Frepetitory-i-obucenie&specId=%2Frepetitory-i-obucenie%2Fanglijskij-azyk&text='
+		serviceInformation = card['occupations']
+		serviceInformation = serviceInformation[0]['specializations']
+		services = serviceInformation[0]['services']
+		numberOfServices = len(services)
+		i = 0
+		while(i != numberOfServices):
+			serviceCard = services[i]['attrs']
+			if i == 0:
+				service = serviceCard['name']
+				try:
+					price = str(serviceCard['price'])
+					serviceDescription = serviceCard['description']
+				except KeyError:
+					price = ' '
+					serviceDescription = ' '
+			if i > 0:
+				try:
+					service = service + '.\n'  + serviceCard['name']
+				except KeyError:
+					continue	
 
+				try:
+					price = price + '\n' + str(serviceCard['price'])
+					serviceDescription = serviceDescription + '\n' + serviceCard['description']
+				except KeyError:
+					price = price + ' '
+					serviceDescription = serviceDescription + ' '
+			i = i + 1
+			
 def main():
 	url = "https://yandex.ru/uslugi/api/1--/category/repetitoryi-i-obuchenie--2255??msp=no&p=0"
 	html = get_html(url)
