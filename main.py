@@ -1,9 +1,10 @@
 import requests
 import json
 import csv
+import time
 
 def  getHtml(url):
-	r = requests.get(url)
+	r = requests.get(url, timeout=3.05)
 	return r.text
 
 def nameCol():
@@ -75,7 +76,7 @@ def getPageData(html):
 
 		try:
 			description = cardInformation['description']
-			description = formattedText(description)
+			#description = formattedText(description)
 
 		except KeyError:
 			description = ' '
@@ -102,11 +103,15 @@ def getPageData(html):
 
 		except IndexError:
 			continue
+		except KeyError:
+			continue
 
 		try:
 			address = adr[0]['address']
 			
 		except IndexError:
+			address = ' '
+		except KeyError:
 			address = ' '
 
 		urlId = card['seoname']
@@ -169,11 +174,14 @@ def main():
 	nameCol()
 	for j in cityArray:
 		urlGenBase = baseUrl + str(j) + cityPart + queryPart + categoryPart + pagePart
-		for i in range(0, 100):
+		i = 0;
+		while i < 70:
 			url = urlGenBase + str(i)
 			print(url)
 			html = getHtml(url)
 			print(getPageData(html))
+			time.sleep(5)
+			i = i + 1;
 	
 
 if __name__ == '__main__':
