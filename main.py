@@ -160,8 +160,7 @@ def getPageData(html):
 				'linkProfi':linkProfi}
 		writeCsv(data)
 
-
-def main():
+if __name__ == '__main__':
 	baseUrl = 'https://yandex.ru/uslugi/api/'
 	cityPart = '--/'
 	queryPart = 'category/repetitoryi-i-obuchenie'
@@ -182,7 +181,3 @@ def main():
 			print(getPageData(html))
 			time.sleep(5)
 			i = i + 1;
-	
-
-if __name__ == '__main__':
-	main()
